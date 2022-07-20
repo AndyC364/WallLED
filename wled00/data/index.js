@@ -247,9 +247,9 @@ function onLoad() {
 	var sett = localStorage.getItem('wledUiCfg');
 	if (sett) cfg = mergeDeep(cfg, JSON.parse(sett));
 
-	// resetPUtil();
+	resetPUtil();
 	// resetProbUtil();
-	makeProbUtil();
+	// makeProbUtil();
 
 	applyCfg();
 	if (cfg.comp.hdays) { //load custom holiday list
@@ -2265,3 +2265,28 @@ _C.addEventListener('touchstart', lock, false);
 _C.addEventListener('mouseout', move, false);
 _C.addEventListener('mouseup', move, false);
 _C.addEventListener('touchend', move, false);
+
+
+// WallLED functions
+
+// Wall light button grid
+function wallSet() {
+	var cn = `<div class="wallContainer">
+	<div class="wallBack">`
+	for(j=1;j<10;j++)
+	{	
+		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">${j}</button>`;
+	}
+	for(j=0;j<3;j++)
+	{	
+	cn += `<button id="btn${j}" class="hideMe btn btn${j} wallBtn">${j}</button>`;
+		// console.info("the button is " + this.id);
+	}
+	for(j=10;j<142;j++)
+	{	
+		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">${j}</button>`;
+	}
+	cn += `</div><br>`
+	
+	d.getElementById('wall').innerHTML = cn;
+}

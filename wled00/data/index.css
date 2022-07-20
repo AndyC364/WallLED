@@ -1253,3 +1253,12 @@ height:100vw;
     width: 38px;
     float: right;
 }
+.setIcon{
+	fill:white;
+	/* height: 24px; */
+	/* width: 24px; */
+}
+
+.icons{
+	margin: -1px 0 5px 0;
+}
