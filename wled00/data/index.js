@@ -1,4 +1,30 @@
 //page js
+
+//WallLED variables
+var taps = [];
+var rgbJSON = [];
+var star = 0;
+var btnId;
+var pnum = 0;
+
+var clearJSON = '{"seg":{"i":[0,141,[0,0,0]]}}';
+var liveJSON;
+var baseJSON;
+var probArray = [];
+var probString;
+var probJSON;
+var starRGB;
+
+//RGB button colours
+var startRGB = 	"0,255,12";
+var handRGB = 	"94,77,255";
+var finishRGB =	"255,215,0";
+var footRGB = 	"255,12,0";
+var bgRGB = 	"51,51,51";
+var offRGB = 	"0,0,0";
+
+//================================================================================
+
 var loc = false, locip;
 var noNewSegs = false;
 var isOn = false, nlA = false, isLv = false, isInfo = false, isNodes = false, syncSend = false, syncTglRecv = true;
@@ -221,7 +247,9 @@ function onLoad() {
 	var sett = localStorage.getItem('wledUiCfg');
 	if (sett) cfg = mergeDeep(cfg, JSON.parse(sett));
 
-	resetPUtil();
+	// resetPUtil();
+	// resetProbUtil();
+	makeProbUtil();
 
 	applyCfg();
 	if (cfg.comp.hdays) { //load custom holiday list
@@ -249,6 +277,7 @@ function onLoad() {
 	selectSlot(0);
 	updateTablinks(0);
 	resetUtil();
+	wallSet(); 
 	cpick.on("input:end", function() {
 		setColor(1);
 	});
