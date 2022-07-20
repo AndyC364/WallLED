@@ -1262,3 +1262,7 @@ height:100vw;
 .icons{
 	margin: -1px 0 5px 0;
 }
+
+#namelabel{
+	color:green;
+}

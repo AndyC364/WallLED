@@ -277,7 +277,7 @@ function onLoad() {
 	selectSlot(0);
 	updateTablinks(0);
 	resetUtil();
-	wallSet(); 
+	buttonGrid(); 
 	cpick.on("input:end", function() {
 		setColor(1);
 	});
@@ -2270,7 +2270,7 @@ _C.addEventListener('touchend', move, false);
 // WallLED functions
 
 // Wall light button grid
-function wallSet() {
+function buttonGrid() {
 	var cn = `<div class="wallContainer">
 	<div class="wallBack">`
 	for(j=1;j<10;j++)
@@ -2289,4 +2289,264 @@ function wallSet() {
 	cn += `</div><br>`
 	
 	d.getElementById('wall').innerHTML = cn;
+}
+
+function updateApi(i){
+	d.getElementById(`p${i}api`).value = liveJSON;//update text box with button generated JSON
+}
+
+function starSet(x){
+	btnId = x.id;
+	star = btnId.slice(3,6);
+
+	if(taps[star] >= 0 && taps[star] < 4){
+		taps[star]++;
+		// console.info(taps[star] + " taps: " + " | " + btnId);
+	}
+	else if (taps[star] >= 4) {
+		taps[star] = 0;
+		// console.info(taps[star] + " taps: " + " | " + btnId);
+	}
+	else{
+		taps[star] = 1;
+		// console.info(taps[star] + " taps: " + " | " + btnId);
+	}
+
+
+	switch (taps[star]) {
+		case 1:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + startRGB + ")";
+			starRGB = startRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		case 2:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + handRGB + ")";
+			starRGB = handRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		case 3:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + finishRGB + ")";
+			starRGB = finishRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		case 4:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + footRGB + ")";
+			starRGB = footRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		default:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + bgRGB + ")";
+			starRGB = offRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+	}
+}
+
+
+function saveProb(i) {
+	pI = parseInt(d.getElementById(`p${i}id`).value);
+	if (!pI || pI < 1) pI = (i > 0) ? i : getLowestUnusedP();
+	pN = d.getElementById(`p${i}txt`).value;
+	if (pN == "") pN = "Preset " + pI;
+	var obj = {};
+	if (!d.getElementById(`p${i}cstgl`).unchecked) {
+		var raw = d.getElementById(`p${i}api`).value;
+		try {
+			obj = JSON.parse(raw);
+		} catch (e) {
+			obj.win = raw;
+			if (raw.length < 2) {
+				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Please enter your API command first";
+				return;
+			} else if (raw.indexOf('{') > -1) {
+				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Syntax error in custom JSON API command";
+				return;
+			} else if (raw.indexOf("Please") == 0) {
+				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Please refresh the page before modifying this preset";
+				return;
+			}
+		}
+		obj.o = true;
+	} else {
+		obj.ib = d.getElementById(`p${i}ibtgl`).unchecked;
+		obj.sb = d.getElementById(`p${i}sbtgl`).unchecked;
+	}
+	obj.psave = pI; obj.n = pN;
+	var pQN = d.getElementById(`p${i}ql`).value;
+	if (pQN.length > 0) obj.ql = pQN;
+
+	showToast("Saving " + pN + " (" + pI + ")");
+	requestJson(obj);
+	if (obj.o) {
+		pJson[pI] = obj;
+		delete pJson[pI].psave;
+		delete pJson[pI].o;
+		delete pJson[pI].v;
+		delete pJson[pI].time;
+	} else {
+		pJson[pI] = { "n": pN, "win": "Please refresh the page to see this newly saved command." };
+		if (obj.win) pJson[pI].win = obj.win;
+		if (obj.ql) pJson[pI].ql = obj.ql;
+	}
+	populatePresets();
+	// resetProbUtil();
+	makeProbUtil();
+}
+
+function saveProbLive() {
+	pI = 1;
+	pN = "Live";
+	var obj = {};
+	
+		var raw = liveJSON;
+		try {
+			obj = JSON.parse(raw);
+		} catch (e) {
+			obj.win = raw;
+			if (raw.length < 2) {
+				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Please enter your API command first";
+				return;
+			} else if (raw.indexOf('{') > -1) {
+				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Syntax error in custom JSON API command";
+				return;
+			} else if (raw.indexOf("Please") == 0) {
+				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Please refresh the page before modifying this preset";
+				return;
+			}
+		}
+		obj.o = true;
+	
+	obj.psave = pI; obj.n = pN;
+	// var pQN = d.getElementById(`p${i}ql`).value;
+	// if (pQN.length > 0) obj.ql = pQN;
+
+	showToast("Saving " + pN + " (" + pI + ")");
+	requestJson(obj);
+	// console.info("obj.o: " + obj.o);
+	if (obj.o) {
+		pJson[pI] = obj;
+
+		console.info("pJson-pI-psave: " + pJson[pI].psave);
+		console.info("pJson-pI-o: " + pJson[pI].o);
+		console.info("pJson-pI-v: " + pJson[pI].v);
+		console.info("pJson-pI-time: " + pJson[pI].time);
+
+		delete pJson[pI].psave;
+		delete pJson[pI].o;
+		delete pJson[pI].v;
+		delete pJson[pI].time;
+	} else {
+		pJson[pI] = { "n": pN, "win": "Please refresh the page to see this newly saved command." };
+		if (obj.win) pJson[pI].win = obj.win;
+		if (obj.ql) pJson[pI].ql = obj.ql;
+		console.info("pJson-pI-win: " + pJson[pI].win);
+		console.info("pJson-pI-ql: " + pJson[pI].ql);
+	}
+	populatePresets();
+	// resetProbUtil();
+	makeProbUtil();
+}
+
+function makeProb(i) {
+	if(probJSON){
+		liveJSON = probJSON;
+	}else{
+		liveJSON = clearJSON;
+	}
+	return `
+	<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i > 0) ? pName(i) : ""}" placeholder="Enter name..."/><br>
+	<div class="c">Emoji Button: <input type="text" class="stxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/>(optional)</div>
+	<div class="h">(optional)</div>
+	<label class="check revchkl hidden">
+		${(i > 0) ? "Overwrite with state" : "Use current state"}
+		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i > 0) ? "" : "checked"}>
+		<span class="checkmark schk"></span>
+	</label><br>
+	<div class="po2 showMe" id="p${i}o2">
+		API command<br>
+		<textarea class="noslide" id="p${i}api">${liveJSON}</textarea>
+	</div>
+	<div class="po1" id="p${i}o1">
+		<label class="check revchkl hidden">
+			Include brightness
+			<input type="checkbox" id="p${i}ibtgl" unchecked>
+			<span class="checkmark schk"></span>
+		</label>
+		<label class="check revchkl hidden">
+			Save segment bounds
+			<input type="checkbox" id="p${i}sbtgl" unchecked>
+			<span class="checkmark schk"></span>
+		</label>
+	</div>
+	<div class="c">Save to ID <input class="noslide" id="p${i}id" type="number" oninput="checkUsed(${i})" max=250 min=1 value=${(i > 0) ? i : getLowestUnusedP()}></div>
+	<div class="c">
+		<button class="btn btn-i btn-p btn-save" onclick="saveProb(${i})"><i class="icons btn-icon">&#xe390;</i>${(i > 0) ? "Save changes" : "Save preset"}</button>
+		${(i > 0) ? '<button class="btn btn-i btn-p btn-delete" onclick="delP(' + i + ')"><i class="icons btn-icon">&#xe037;</i></button>' :
+			'<button class="btn btn-p" onclick="resetProbUtil()">Cancel</button>'}
+	</div>
+	<div class="pwarn ${(i > 0) ? "bp" : ""} c" id="p${i}warn">
+
+	</div>
+	${(i > 0) ? ('<div class="h">ID ' + i + '</div>') : ""}`;
+}
+
+
+// function makePUtil() {
+// 	d.getElementById('putil').innerHTML = `<div class="seg pres">
+// 		<div class="segname newseg">
+// 			New problem</div><br>
+// 		<div class="segin expanded">
+// 		${makeP(0)}</div></div>`;
+// 	updateTrail(d.getElementById('p0p'));
+// }
+function makeProbUtil() {
+	d.getElementById('probutil').innerHTML = `<div class="seg pres">
+		<div class="segname newseg">
+			New problemo</div><br>
+		<div class="segin expanded">
+		${makeProb(0)}</div></div>`;
+	//saveProbLive(0);
+	updateTrail(d.getElementById('p0p'));
+}
+
+
+function resetProbUtil() {
+	var cn = `<button class="btn btn-s btn-i" onclick="makeProbUtil()"><i class="icons btn-icon">&#xe18a;</i>Create problem</button><br>`;
+	d.getElementById('probutil').innerHTML = cn;
+}
+// function resetPUtil() {
+// 	var cn = `<button class="btn btn-s btn-i" onclick="makePUtil()"><i class="icons btn-icon">&#xe18a;</i>Create preset</button><br>`;
+// 	d.getElementById('putil').innerHTML = cn;
+// }
+
+function createProbJSON(star){
+	probArray[star] = star-1 + ',[' + starRGB + ']';
+	probString = ""; //clear so duplicates aren't added on multi taps
+	for(i=0; i<probArray.length; i++){
+		if(probArray[i]){
+			probString += "," + probArray[i];
+		}
+	}
+	probJSON = '{"seg":{"i":[0,141,[0,0,0]' + probString + ']}}';
+	console.info(probJSON);
 }
