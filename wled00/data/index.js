@@ -248,8 +248,8 @@ function onLoad() {
 	if (sett) cfg = mergeDeep(cfg, JSON.parse(sett));
 
 	resetPUtil();
-	// resetProbUtil();
-	// makeProbUtil();
+	resetProbUtil();
+	makeProbUtil();
 
 	applyCfg();
 	if (cfg.comp.hdays) { //load custom holiday list
@@ -1459,6 +1459,73 @@ function plR(p) {
 	}
 }
 
+// original makeP
+// function makeP(i,pl) {
+// 	var content = "";
+// 	if (pl) {
+// 		var rep = plJson[i].repeat ? plJson[i].repeat : 0;
+// 		content = `<div class="first c">Playlist Entries</div>
+// <div id="ple${i}"></div>
+// <label class="check revchkl">
+// 	Shuffle
+// 	<input type="checkbox" id="pl${i}rtgl" onchange="plR(${i})" ${plJson[i].r?"checked":""}>
+// 	<span class="checkmark schk"></span>
+// </label>
+// <label class="check revchkl">
+// 	Repeat indefinitely
+// 	<input type="checkbox" id="pl${i}rptgl" onchange="plR(${i})" ${rep?"":"checked"}>
+// 	<span class="checkmark schk"></span>
+// </label>
+// <div id="pl${i}o1" style="display:${rep?"block":"none"}">
+// 	<div class="c">Repeat <input class="noslide" type="number" id="pl${i}rp" oninput="plR(${i})" max=127 min=0 value=${rep>0?rep:1}> times</div>
+// 	End preset:<br>
+// 	<select class="btn sel sel-ple" id="pl${i}selEnd" onchange="plR(${i})" data-val=${plJson[i].end?plJson[i].end:0}>
+// 		<option value=0>None</option>
+// 		${makePlSel(true)}
+// 	</select>
+// </div>
+// <button class="btn btn-i btn-p" onclick="testPl(${i}, this)"><i class='icons btn-icon'>&#xe139;</i>Test</button>`;
+// 	}
+// 	else content = `<label class="check revchkl">
+// 	Include brightness
+// 	<input type="checkbox" id="p${i}ibtgl" checked>
+// 	<span class="checkmark schk"></span>
+// </label>
+// <label class="check revchkl">
+// 	Save segment bounds
+// 	<input type="checkbox" id="p${i}sbtgl" checked>
+// 	<span class="checkmark schk"></span>
+// </label>`;
+
+// 	return `<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i>0)?pName(i):""}" placeholder="Enter name..."/><br>
+// <div class="c">Quick load label: <input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/></div>
+// <div class="h">(leave empty for no Quick load button)</div>
+// <div ${pl&&i==0?"style='display:none'":""}>
+// 	<label class="check revchkl">
+// 		${pl?"Show playlist editor":(i>0)?"Overwrite with state":"Use current state"}
+// 		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i==0||pl)?"checked":""}>
+// 		<span class="checkmark schk"></span>
+// 	</label><br>
+// </div>
+// <div class="po2" id="p${i}o2">
+// 	API command<br>
+// 	<textarea class="noslide" id="p${i}api"></textarea>
+// </div>
+// <div class="po1" id="p${i}o1">
+// 	${content}
+// </div>
+// <div class="c">Save to ID <input class="noslide" id="p${i}id" type="number" oninput="checkUsed(${i})" max=250 min=1 value=${(i>0)?i:getLowestUnusedP()}></div>
+// <div class="c">
+// 	<button class="btn btn-i btn-p" onclick="saveP(${i},${pl})"><i class="icons btn-icon">&#xe390;</i>Save ${(pl)?"playlist":(i>0)?"changes":"preset"}</button>
+// 	${(i>0)?'<button class="btn btn-i btn-p" id="p'+i+'del" onclick="delP('+i+')"><i class="icons btn-icon">&#xe037;</i>Delete '+(pl?"playlist":"preset"):
+// 	'<button class="btn btn-p" onclick="resetPUtil()">Cancel'}</button>
+// </div>
+// <div class="pwarn ${(i>0)?"bp":""} c" id="p${i}warn">
+
+// </div>
+// ${(i>0)? ('<div class="h">ID ' +i+ '</div>'):""}`;
+// }
+
 function makeP(i,pl) {
 	var content = "";
 	if (pl) {
@@ -1525,13 +1592,13 @@ function makeP(i,pl) {
 ${(i>0)? ('<div class="h">ID ' +i+ '</div>'):""}`;
 }
 
-function makePUtil() {
-	d.getElementById('putil').innerHTML = `<div class="pres">
-	<div class="pname newseg">
-		New preset</div>
-	<div class="segin expanded">
-	${makeP(0)}</div></div>`;
-}
+// function makePUtil() {
+// 	d.getElementById('putil').innerHTML = `<div class="pres">
+// 	<div class="pname newseg">
+// 		New preset</div>
+// 	<div class="segin expanded">
+// 	${makeP(0)}</div></div>`;
+// }
 
 function makePlEntry(p,i) {
 	return `
@@ -2291,76 +2358,9 @@ function buttonGrid() {
 	d.getElementById('wall').innerHTML = cn;
 }
 
-function updateApi(i){
-	d.getElementById(`p${i}api`).value = liveJSON;//update text box with button generated JSON
-}
-
-function starSet(x){
-	btnId = x.id;
-	star = btnId.slice(3,6);
-
-	if(taps[star] >= 0 && taps[star] < 4){
-		taps[star]++;
-		// console.info(taps[star] + " taps: " + " | " + btnId);
-	}
-	else if (taps[star] >= 4) {
-		taps[star] = 0;
-		// console.info(taps[star] + " taps: " + " | " + btnId);
-	}
-	else{
-		taps[star] = 1;
-		// console.info(taps[star] + " taps: " + " | " + btnId);
-	}
 
 
-	switch (taps[star]) {
-		case 1:
-			d.getElementById(btnId).style.backgroundColor = "rgb(" + startRGB + ")";
-			starRGB = startRGB;
-			createProbJSON(star);
-			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
-			// saveP();
-			break;
-		case 2:
-			d.getElementById(btnId).style.backgroundColor = "rgb(" + handRGB + ")";
-			starRGB = handRGB;
-			createProbJSON(star);
-			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
-			// saveP();
-			break;
-		case 3:
-			d.getElementById(btnId).style.backgroundColor = "rgb(" + finishRGB + ")";
-			starRGB = finishRGB;
-			createProbJSON(star);
-			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
-			// saveP();
-			break;
-		case 4:
-			d.getElementById(btnId).style.backgroundColor = "rgb(" + footRGB + ")";
-			starRGB = footRGB;
-			createProbJSON(star);
-			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
-			// saveP();
-			break;
-		default:
-			d.getElementById(btnId).style.backgroundColor = "rgb(" + bgRGB + ")";
-			starRGB = offRGB;
-			createProbJSON(star);
-			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
-			// saveP();
-			break;
-	}
-}
+
 
 
 function saveProb(i) {
@@ -2467,50 +2467,52 @@ function saveProbLive() {
 	makeProbUtil();
 }
 
-function makeProb(i) {
-	if(probJSON){
-		liveJSON = probJSON;
-	}else{
-		liveJSON = clearJSON;
-	}
-	return `
-	<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i > 0) ? pName(i) : ""}" placeholder="Enter name..."/><br>
-	<div class="c">Emoji Button: <input type="text" class="stxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/>(optional)</div>
-	<div class="h">(optional)</div>
-	<label class="check revchkl hidden">
-		${(i > 0) ? "Overwrite with state" : "Use current state"}
-		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i > 0) ? "" : "checked"}>
-		<span class="checkmark schk"></span>
-	</label><br>
-	<div class="po2 showMe" id="p${i}o2">
-		API command<br>
-		<textarea class="noslide" id="p${i}api">${liveJSON}</textarea>
-	</div>
-	<div class="po1" id="p${i}o1">
-		<label class="check revchkl hidden">
-			Include brightness
-			<input type="checkbox" id="p${i}ibtgl" unchecked>
-			<span class="checkmark schk"></span>
-		</label>
-		<label class="check revchkl hidden">
-			Save segment bounds
-			<input type="checkbox" id="p${i}sbtgl" unchecked>
-			<span class="checkmark schk"></span>
-		</label>
-	</div>
-	<div class="c">Save to ID <input class="noslide" id="p${i}id" type="number" oninput="checkUsed(${i})" max=250 min=1 value=${(i > 0) ? i : getLowestUnusedP()}></div>
-	<div class="c">
-		<button class="btn btn-i btn-p btn-save" onclick="saveProb(${i})"><i class="icons btn-icon">&#xe390;</i>${(i > 0) ? "Save changes" : "Save preset"}</button>
-		${(i > 0) ? '<button class="btn btn-i btn-p btn-delete" onclick="delP(' + i + ')"><i class="icons btn-icon">&#xe037;</i></button>' :
-			'<button class="btn btn-p" onclick="resetProbUtil()">Cancel</button>'}
-	</div>
-	<div class="pwarn ${(i > 0) ? "bp" : ""} c" id="p${i}warn">
+// makeProb from wall1
 
-	</div>
-	${(i > 0) ? ('<div class="h">ID ' + i + '</div>') : ""}`;
-}
+// function makeProb(i) {
+// 	if(probJSON){
+// 		liveJSON = probJSON;
+// 	}else{
+// 		liveJSON = clearJSON;
+// 	}
+// 	return `
+// 	<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i > 0) ? pName(i) : ""}" placeholder="Enter name..."/><br>
+// 	<div class="c">Emoji Button: <input type="text" class="stxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/>(optional)</div>
+// 	<div class="h">(optional)</div>
+// 	<label class="check revchkl hidden">
+// 		${(i > 0) ? "Overwrite with state" : "Use current state"}
+// 		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i > 0) ? "" : "checked"}>
+// 		<span class="checkmark schk"></span>
+// 	</label><br>
+// 	<div class="po2 showMe" id="p${i}o2">
+// 		API command<br>
+// 		<textarea class="noslide" id="p${i}api">${liveJSON}</textarea>
+// 	</div>
+// 	<div class="po1" id="p${i}o1">
+// 		<label class="check revchkl hidden">
+// 			Include brightness
+// 			<input type="checkbox" id="p${i}ibtgl" unchecked>
+// 			<span class="checkmark schk"></span>
+// 		</label>
+// 		<label class="check revchkl hidden">
+// 			Save segment bounds
+// 			<input type="checkbox" id="p${i}sbtgl" unchecked>
+// 			<span class="checkmark schk"></span>
+// 		</label>
+// 	</div>
+// 	<div class="c">Save to ID <input class="noslide" id="p${i}id" type="number" oninput="checkUsed(${i})" max=250 min=1 value=${(i > 0) ? i : getLowestUnusedP()}></div>
+// 	<div class="c">
+// 		<button class="btn btn-i btn-p btn-save" onclick="saveProb(${i})"><i class="icons btn-icon">&#xe390;</i>${(i > 0) ? "Save changes" : "Save preset"}</button>
+// 		${(i > 0) ? '<button class="btn btn-i btn-p btn-delete" onclick="delP(' + i + ')"><i class="icons btn-icon">&#xe037;</i></button>' :
+// 			'<button class="btn btn-p" onclick="resetProbUtil()">Cancel</button>'}
+// 	</div>
+// 	<div class="pwarn ${(i > 0) ? "bp" : ""} c" id="p${i}warn">
 
+// 	</div>
+// 	${(i > 0) ? ('<div class="h">ID ' + i + '</div>') : ""}`;
+// }
 
+//old 
 // function makePUtil() {
 // 	d.getElementById('putil').innerHTML = `<div class="seg pres">
 // 		<div class="segname newseg">
@@ -2519,14 +2521,25 @@ function makeProb(i) {
 // 		${makeP(0)}</div></div>`;
 // 	updateTrail(d.getElementById('p0p'));
 // }
+
+//old
+// function makeProbUtil() {
+// 	d.getElementById('probutil').innerHTML = `<div class="seg pres">
+// 		<div class="segname newseg">
+// 			New problemo</div><br>
+// 		<div class="segin expanded">
+// 		${makeProb(0)}</div></div>`;
+// 	//saveProbLive(0);
+// 	updateTrail(d.getElementById('p0p'));
+// }
+
 function makeProbUtil() {
-	d.getElementById('probutil').innerHTML = `<div class="seg pres">
-		<div class="segname newseg">
-			New problemo</div><br>
-		<div class="segin expanded">
-		${makeProb(0)}</div></div>`;
+	d.getElementById('probutil').innerHTML = `<div class="pres">
+	<div class="pname newseg">
+		Create prob</div>
+	<div class="segin expanded">
+	${makeProb(0)}</div></div>`;
 	//saveProbLive(0);
-	updateTrail(d.getElementById('p0p'));
 }
 
 
@@ -2549,4 +2562,141 @@ function createProbJSON(star){
 	}
 	probJSON = '{"seg":{"i":[0,141,[0,0,0]' + probString + ']}}';
 	console.info(probJSON);
+}
+
+function updateApi(i){
+	d.getElementById(`p${i}api`).value = liveJSON;//update text box with button generated JSON
+}
+
+function starSet(x){
+	btnId = x.id;
+	star = btnId.slice(3,6);
+
+	if(taps[star] >= 0 && taps[star] < 4){
+		taps[star]++;
+		// console.info(taps[star] + " taps: " + " | " + btnId);
+	}
+	else if (taps[star] >= 4) {
+		taps[star] = 0;
+		// console.info(taps[star] + " taps: " + " | " + btnId);
+	}
+	else{
+		taps[star] = 1;
+		// console.info(taps[star] + " taps: " + " | " + btnId);
+	}
+
+
+	switch (taps[star]) {
+		case 1:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + startRGB + ")";
+			starRGB = startRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		case 2:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + handRGB + ")";
+			starRGB = handRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		case 3:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + finishRGB + ")";
+			starRGB = finishRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		case 4:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + footRGB + ")";
+			starRGB = footRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+		default:
+			d.getElementById(btnId).style.backgroundColor = "rgb(" + bgRGB + ")";
+			starRGB = offRGB;
+			createProbJSON(star);
+			liveJSON = probJSON;
+			updateApi();
+			saveProbLive();
+			// saveP();
+			break;
+	}
+}
+
+function makeProb(i,pl) {
+	var content = "";
+	if (pl) {
+		var rep = plJson[i].repeat ? plJson[i].repeat : 0;
+		content = `<div class="first c">Playlist Entries</div>
+<div id="ple${i}"></div>
+<label class="check revchkl">
+	Shuffle
+	<input type="checkbox" id="pl${i}rtgl" onchange="plR(${i})" ${plJson[i].r?"checked":""}>
+	<span class="checkmark schk"></span>
+</label>
+<label class="check revchkl">
+	Repeat indefinitely
+	<input type="checkbox" id="pl${i}rptgl" onchange="plR(${i})" ${rep?"":"checked"}>
+	<span class="checkmark schk"></span>
+</label>
+<div id="pl${i}o1" style="display:${rep?"block":"none"}">
+	<div class="c">Repeat <input class="noslide" type="number" id="pl${i}rp" oninput="plR(${i})" max=127 min=0 value=${rep>0?rep:1}> times</div>
+	End preset:<br>
+	<select class="btn sel sel-ple" id="pl${i}selEnd" onchange="plR(${i})" data-val=${plJson[i].end?plJson[i].end:0}>
+		<option value=0>None</option>
+		${makePlSel(true)}
+	</select>
+</div>
+<button class="btn btn-i btn-p" onclick="testPl(${i}, this)"><i class='icons btn-icon'>&#xe139;</i>Test</button>`;
+	}
+	else content = `<label class="check revchkl">
+	Include brightness
+	<input type="checkbox" id="p${i}ibtgl" checked>
+	<span class="checkmark schk"></span>
+</label>
+<label class="check revchkl">
+	Save segment bounds
+	<input type="checkbox" id="p${i}sbtgl" checked>
+	<span class="checkmark schk"></span>
+</label>`;
+
+	return `<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i>0)?pName(i):""}" placeholder="Enter name..."/><br>
+<div class="c">Quick load label: <input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/></div>
+<div class="h">(leave empty for no Quick load button)</div>
+<div ${pl&&i==0?"style='display:none'":""}>
+	<label class="check revchkl">
+		${pl?"Show playlist editor":(i>0)?"Overwrite with state":"Use current state"}
+		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i==0||pl)?"checked":""}>
+		<span class="checkmark schk"></span>
+	</label><br>
+</div>
+<div class="po2" id="p${i}o2">
+	API command<br>
+	<textarea class="noslide" id="p${i}api"></textarea>
+</div>
+<div class="po1" id="p${i}o1">
+	${content}
+</div>
+<div class="c">Save to ID <input class="noslide" id="p${i}id" type="number" oninput="checkUsed(${i})" max=250 min=1 value=${(i>0)?i:getLowestUnusedP()}></div>
+<div class="c">
+	<button class="btn btn-i btn-p" onclick="saveP(${i},${pl})"><i class="icons btn-icon">&#xe390;</i>Save ${(pl)?"playlist":(i>0)?"changes":"preset"}</button>
+	${(i>0)?'<button class="btn btn-i btn-p" id="p'+i+'del" onclick="delP('+i+')"><i class="icons btn-icon">&#xe037;</i>Delete '+(pl?"playlist":"preset"):
+	'<button class="btn btn-p" onclick="resetPUtil()">Cancel'}</button>
+</div>
+<div class="pwarn ${(i>0)?"bp":""} c" id="p${i}warn">
+
+</div>
+${(i>0)? ('<div class="h">ID ' +i+ '</div>'):""}`;
 }
