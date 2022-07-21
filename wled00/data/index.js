@@ -2661,14 +2661,14 @@ function makeProb(i,pl) {
 </div>
 <button class="btn btn-i btn-p" onclick="testPl(${i}, this)"><i class='icons btn-icon'>&#xe139;</i>Test</button>`;
 	}
-	else content = `<label class="check revchkl">
+	else content = `<label class="check revchkl hidden">
 	Include brightness
-	<input type="checkbox" id="p${i}ibtgl" checked>
+	<input type="checkbox" id="p${i}ibtgl" unchecked>
 	<span class="checkmark schk"></span>
 </label>
-<label class="check revchkl">
+<label class="check revchkl hidden">
 	Save segment bounds
-	<input type="checkbox" id="p${i}sbtgl" checked>
+	<input type="checkbox" id="p${i}sbtgl" unchecked>
 	<span class="checkmark schk"></span>
 </label>`;
 
@@ -2676,13 +2676,13 @@ function makeProb(i,pl) {
 <div class="c">Quick load label: <input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/></div>
 <div class="h">(leave empty for no Quick load button)</div>
 <div ${pl&&i==0?"style='display:none'":""}>
-	<label class="check revchkl">
+	<label class="check revchkl hidden">
 		${pl?"Show playlist editor":(i>0)?"Overwrite with state":"Use current state"}
 		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i==0||pl)?"checked":""}>
 		<span class="checkmark schk"></span>
 	</label><br>
 </div>
-<div class="po2" id="p${i}o2">
+<div class="po2 showMe" id="p${i}o2">
 	API command<br>
 	<textarea class="noslide" id="p${i}api"></textarea>
 </div>
