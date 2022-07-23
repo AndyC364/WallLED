@@ -2565,7 +2565,7 @@ function createProbJSON(star){
 }
 
 function updateApi(i){
-	d.getElementById(`p${i}api`).value = liveJSON;//update text box with button generated JSON
+	d.getElementById('pAPIapi').value = liveJSON;//update text box with button generated JSON
 }
 
 function starSet(x){
@@ -2672,30 +2672,30 @@ function makeProb(i,pl) {
 	<span class="checkmark schk"></span>
 </label>`;
 
-	return `<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i>0)?pName(i):""}" placeholder="Enter name..."/><br>
-<div class="c">Quick load label: <input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off"/></div>
+	return `<input type="text" class="ptxt noslide" id="pAPItxt" autocomplete="off" maxlength=32 value="${(i>0)?pName(i):""}" placeholder="Enter name..."/><br>
+<div class="c">Quick load label: <input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="pAPIql" autocomplete="off"/></div>
 <div class="h">(leave empty for no Quick load button)</div>
 <div ${pl&&i==0?"style='display:none'":""}>
 	<label class="check revchkl hidden">
 		${pl?"Show playlist editor":(i>0)?"Overwrite with state":"Use current state"}
-		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${i})" ${(i==0||pl)?"checked":""}>
+		<input type="checkbox" id="pAPIcstgl" onchange="tglCs(${(i>0)?i:getLowestUnusedP()})" ${(i==0||pl)?"checked":""}>
 		<span class="checkmark schk"></span>
 	</label><br>
 </div>
-<div class="po2 showMe" id="p${i}o2">
+<div class="po2 showMe" id="pAPIo2">
 	API command<br>
-	<textarea class="noslide" id="p${i}api"></textarea>
+	<textarea class="noslide" id="pAPIapi"></textarea>
 </div>
-<div class="po1" id="p${i}o1">
+<div class="po1" id="pAPIo1">
 	${content}
 </div>
-<div class="c">Save to ID <input class="noslide" id="p${i}id" type="number" oninput="checkUsed(${i})" max=250 min=1 value=${(i>0)?i:getLowestUnusedP()}></div>
+<div class="c">Save to ID <input class="noslide" id="pAPIid" type="number" oninput="checkUsed(${(i>0)?i:getLowestUnusedP()})" max=250 min=1 value=${(i>0)?i:getLowestUnusedP()}></div>
 <div class="c">
-	<button class="btn btn-i btn-p" onclick="saveP(${i},${pl})"><i class="icons btn-icon">&#xe390;</i>Save ${(pl)?"playlist":(i>0)?"changes":"preset"}</button>
+	<button class="btn btn-i btn-p" onclick="saveP(${(i>0)?i:getLowestUnusedP()},${pl})"><i class="icons btn-icon">&#xe390;</i>Save ${(pl)?"playlist":(i>0)?"changes":"preset"}</button>
 	${(i>0)?'<button class="btn btn-i btn-p" id="p'+i+'del" onclick="delP('+i+')"><i class="icons btn-icon">&#xe037;</i>Delete '+(pl?"playlist":"preset"):
 	'<button class="btn btn-p" onclick="resetPUtil()">Cancel'}</button>
 </div>
-<div class="pwarn ${(i>0)?"bp":""} c" id="p${i}warn">
+<div class="pwarn ${(i>0)?"bp":""} c" id="pAPIwarn">
 
 </div>
 ${(i>0)? ('<div class="h">ID ' +i+ '</div>'):""}`;
