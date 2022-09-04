@@ -2366,7 +2366,7 @@ function buttonGrid() {
 function saveProb(i) {
 	pI = parseInt(d.getElementById(`p${i}id`).value);
 	if (!pI || pI < 1) pI = (i > 0) ? i : getLowestUnusedP();
-	pN = d.getElementById(`p${i}txt`).value;
+	pN = d.getElementById(`pAPItxt`).value;
 	if (pN == "") pN = "Preset " + pI;
 	var obj = {};
 	if (!d.getElementById(`p${i}cstgl`).unchecked) {
@@ -2415,7 +2415,7 @@ function saveProb(i) {
 
 function saveProbLive() {
 	pI = 1;
-	pN = "Live";
+	pN = "Live1";
 	var obj = {};
 	
 		var raw = liveJSON;
@@ -2463,7 +2463,8 @@ function saveProbLive() {
 		console.info("pJson-pI-ql: " + pJson[pI].ql);
 	}
 	populatePresets();
-	// resetProbUtil();
+	updateApi();
+	//resetProbUtil();
 	makeProbUtil();
 }
 
@@ -2565,7 +2566,7 @@ function createProbJSON(star){
 }
 
 function updateApi(i){
-	d.getElementById('pAPIapi').value = liveJSON;//update text box with button generated JSON
+	d.getElementById(`p${i}api`).value = liveJSON;//update text box with button generated JSON
 }
 
 function starSet(x){
@@ -2637,31 +2638,7 @@ function starSet(x){
 
 function makeProb(i,pl) {
 	var content = "";
-	if (pl) {
-		var rep = plJson[i].repeat ? plJson[i].repeat : 0;
-		content = `<div class="first c">Playlist Entries</div>
-<div id="ple${i}"></div>
-<label class="check revchkl">
-	Shuffle
-	<input type="checkbox" id="pl${i}rtgl" onchange="plR(${i})" ${plJson[i].r?"checked":""}>
-	<span class="checkmark schk"></span>
-</label>
-<label class="check revchkl">
-	Repeat indefinitely
-	<input type="checkbox" id="pl${i}rptgl" onchange="plR(${i})" ${rep?"":"checked"}>
-	<span class="checkmark schk"></span>
-</label>
-<div id="pl${i}o1" style="display:${rep?"block":"none"}">
-	<div class="c">Repeat <input class="noslide" type="number" id="pl${i}rp" oninput="plR(${i})" max=127 min=0 value=${rep>0?rep:1}> times</div>
-	End preset:<br>
-	<select class="btn sel sel-ple" id="pl${i}selEnd" onchange="plR(${i})" data-val=${plJson[i].end?plJson[i].end:0}>
-		<option value=0>None</option>
-		${makePlSel(true)}
-	</select>
-</div>
-<button class="btn btn-i btn-p" onclick="testPl(${i}, this)"><i class='icons btn-icon'>&#xe139;</i>Test</button>`;
-	}
-	else content = `<label class="check revchkl hidden">
+	content = `<label class="check revchkl hidden">
 	Include brightness
 	<input type="checkbox" id="p${i}ibtgl" unchecked>
 	<span class="checkmark schk"></span>
@@ -2691,7 +2668,7 @@ function makeProb(i,pl) {
 </div>
 <div class="c">Save to ID <input class="noslide" id="pAPIid" type="number" oninput="checkUsed(${(i>0)?i:getLowestUnusedP()})" max=250 min=1 value=${(i>0)?i:getLowestUnusedP()}></div>
 <div class="c">
-	<button class="btn btn-i btn-p" onclick="saveP(${(i>0)?i:getLowestUnusedP()},${pl})"><i class="icons btn-icon">&#xe390;</i>Save ${(pl)?"playlist":(i>0)?"changes":"preset"}</button>
+	<button class="btn btn-i btn-p" onclick="saveProb(${(i>0)?i:getLowestUnusedP()},${pl})"><i class="icons btn-icon">&#xe390;</i>Save ${(pl)?"playlist":(i>0)?"changes":"preset"}</button>
 	${(i>0)?'<button class="btn btn-i btn-p" id="p'+i+'del" onclick="delP('+i+')"><i class="icons btn-icon">&#xe037;</i>Delete '+(pl?"playlist":"preset"):
 	'<button class="btn btn-p" onclick="resetPUtil()">Cancel'}</button>
 </div>
