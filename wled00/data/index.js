@@ -247,7 +247,7 @@ function onLoad() {
 	var sett = localStorage.getItem('wledUiCfg');
 	if (sett) cfg = mergeDeep(cfg, JSON.parse(sett));
 
-	resetPUtil();
+	// resetPUtil();
 	resetProbUtil();
 	makeProbUtil();
 
@@ -272,7 +272,7 @@ function onLoad() {
 		});
 	} else
 		loadBg(cfg.theme.bg.url);
-	if (cfg.comp.css) loadSkinCSS('skinCss');
+	//if (cfg.comp.css) loadSkinCSS('skinCss');
 
 	selectSlot(0);
 	updateTablinks(0);
@@ -2366,7 +2366,7 @@ function buttonGrid() {
 function saveProb(i) {
 	pI = parseInt(d.getElementById(`p${i}id`).value);
 	if (!pI || pI < 1) pI = (i > 0) ? i : getLowestUnusedP();
-	pN = d.getElementById(`pAPItxt`).value;
+	pN = d.getElementById(`p${i}txt`).value;
 	if (pN == "") pN = "Preset " + pI;
 	var obj = {};
 	if (!d.getElementById(`p${i}cstgl`).unchecked) {
@@ -2535,12 +2535,14 @@ function saveProbLive() {
 // }
 
 function makeProbUtil() {
+	//var lowest = getLowestUnusedP();
 	d.getElementById('probutil').innerHTML = `<div class="pres">
 	<div class="pname newseg">
 		Create prob</div>
 	<div class="segin expanded">
 	${makeProb(0)}</div></div>`;
 	//saveProbLive(0);
+	// 	updateTrail(d.getElementById('p0p'));
 }
 
 
@@ -2566,7 +2568,7 @@ function createProbJSON(star){
 }
 
 function updateApi(i){
-	d.getElementById(`APIcmd`).value = liveJSON;//update text box with button generated JSON
+	d.getElementById(`p${i}api`).value = liveJSON;//update text box with button generated JSON
 }
 
 function starSet(x){
