@@ -2595,8 +2595,8 @@ function starSet(x){
 			starRGB = startRGB;
 			createProbJSON(star);
 			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
+			updateApi(0);
+			saveProbLive(249);
 			// saveP();
 			break;
 		case 2:
@@ -2604,8 +2604,8 @@ function starSet(x){
 			starRGB = handRGB;
 			createProbJSON(star);
 			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
+			updateApi(0);
+			saveProbLive(249);
 			// saveP();
 			break;
 		case 3:
@@ -2613,8 +2613,8 @@ function starSet(x){
 			starRGB = finishRGB;
 			createProbJSON(star);
 			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
+			updateApi(0);
+			saveProbLive(249);
 			// saveP();
 			break;
 		case 4:
@@ -2622,8 +2622,8 @@ function starSet(x){
 			starRGB = footRGB;
 			createProbJSON(star);
 			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
+			updateApi(0);
+			saveProbLive(249);
 			// saveP();
 			break;
 		default:
@@ -2631,8 +2631,8 @@ function starSet(x){
 			starRGB = offRGB;
 			createProbJSON(star);
 			liveJSON = probJSON;
-			updateApi();
-			saveProbLive();
+			updateApi(0);
+			saveProbLive(249);
 			// saveP();
 			break;
 	}
