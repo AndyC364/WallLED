@@ -2463,7 +2463,7 @@ function saveProbLive() {
 		console.info("pJson-pI-ql: " + pJson[pI].ql);
 	}
 	populatePresets();
-	updateApi();
+	// updateApi(); // already in starSet
 	//resetProbUtil();
 	makeProbUtil();
 }
