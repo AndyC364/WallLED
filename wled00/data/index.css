@@ -457,10 +457,12 @@ img {
 .sliderdisplay {
 	content:'';
 	position: absolute;
-	top: 12.5px; bottom: 12.5px;
+	/* top: 12.5px; bottom: 12.5px; */
+	top: 0; bottom: 0;
 	left: 13px; right: 13px;
 	background: var(--c-4);
-	border-radius: 17px;
+	/* border-radius: 17px; */
+	border-radius: 0;
 	pointer-events: none;
 	z-index: -1;
 	--bg: var(--c-f);
@@ -1175,7 +1177,8 @@ input[type="text"].search:not(:placeholder-shown) {
 
 @media all and (max-width: 685px) {
 	.top button {
-		width: 16.6%;
+		/* width: 16.6%;  */
+		width: 12.5%; 
 		padding: 8px 0 4px 0;
 	}
 	.hd {
@@ -1183,7 +1186,8 @@ input[type="text"].search:not(:placeholder-shown) {
 	}
 	#briwrap {
 		margin-top: 0px !important;
-		float: none;
+		/* float: none; */
+		float: left;
 	}
 }
 
