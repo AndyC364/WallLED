@@ -39,7 +39,7 @@ html {
 body {
 	margin: 0;
 	background-color: var(--c-1);
-	font-family: Helvetica, Verdana, sans-serif;
+	font-family: Consolas, 'Courier New', monospace;
 	font-size: 17px;
 	color: var(--c-f);
 	text-align: center;
@@ -1194,6 +1194,7 @@ input[type="text"].search:not(:placeholder-shown) {
 }
 
 /* AC */
+.tabcontent{background-color:#1e1e1e;}
 .fll{float:left;}
 .iconSmall{
 	font-size:16px;
@@ -1232,9 +1233,24 @@ height:100vw;
     margin: 0.1666%;
     width: 8%;
     height: 8%;
-    font-size: 16px;
+    font-size: .75rem;
+	font-weight: bold;
     border-radius: 99px;
 	float: left;
+	color: #ccc;
+}
+.wallBtn::first-letter{
+	color:#0dbc79;
+}
+.wallLabel{
+	padding: 0;
+    margin: 0.1666%;
+    width: 8%;
+    height: 8%;
+    font-size: .75rem;
+	font-weight: bold;
+	float: left;
+	color:#0dbc79;
 }
 
 /* .startRGB{background-color: rgb(0,255,12);}

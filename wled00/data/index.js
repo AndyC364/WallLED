@@ -15,6 +15,8 @@ var probString;
 var probJSON;
 var starRGB;
 
+const LEDcodes = ["A12", "B12", "C12", "D12", "E12", "F12", "G12", "H12", "I12", "A11", "B11", "C11", "D11", "E11", "F11", "G11", "H11", "I11", "J11", "K11", "L11", "A10", "B10", "C10", "D10", "E10", "F10", "G10", "H10", "I10", "J10", "K10", "L10", "A9", "B9", "C9", "D9", "E9", "F9", "G9", "H9", "I9", "J9", "K9", "L9", "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8", "I8", "J8", "K8", "L8", "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7", "I7", "J7", "K7", "L7", "A6", "B6", "C6", "D6", "E6", "F6", "G6", "H6", "I6", "J6", "K6", "L6", "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5", "I5", "J5", "K5", "L5", "A4", "B4", "C4", "D4", "E4", "F4", "G4", "H4", "I4", "J4", "K4", "L4", "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3", "I3", "J3", "K3", "L3", "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2", "J2", "K2", "L2", "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1"];
+
 //RGB button colours
 var startRGB = 	"0,255,12";
 var handRGB = 	"94,77,255";
@@ -2337,23 +2339,39 @@ _C.addEventListener('touchend', move, false);
 // WallLED functions
 
 // Wall light button grid
-function buttonGrid() {
+function buttonGrid() 
+{
 	var cn = `<div class="wallContainer">
 	<div class="wallBack">`
-	for(j=1;j<10;j++)
+	for(j=1;j<10;j++) // top row
 	{	
-		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">${j}</button>`;
+		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">`;
+		cn += LEDcodes[j-1]; // puts led code of current led number as button text
+		cn += `</button>`;
 	}
-	for(j=0;j<3;j++)
+	for(j=0;j<3;j++) // hide top right 3
 	{	
-	cn += `<button id="btn${j}" class="hideMe btn btn${j} wallBtn">${j}</button>`;
-		// console.info("the button is " + this.id);
+		cn += `<button id="btn${j}" class="hideMe btn btn${j} wallBtn">${j}</button>`;
 	}
-	for(j=10;j<142;j++)
-	{	
-		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">${j}</button>`;
+	for(j=10;j<142;j++) // all the rest
+	{
+		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">`;
+		cn += LEDcodes[j-1];
+		cn += `</button>`;
 	}
-	cn += `</div><br>`
+	// cn += `<div class=wallLabel>A</div>
+	// <div class=wallLabel>B</div>
+	// <div class=wallLabel>C</div>
+	// <div class=wallLabel>D</div>
+	// <div class=wallLabel>E</div>
+	// <div class=wallLabel>F</div>
+	// <div class=wallLabel>G</div>
+	// <div class=wallLabel>H</div>
+	// <div class=wallLabel>I</div>
+	// <div class=wallLabel>J</div>
+	// <div class=wallLabel>K</div>
+	// <div class=wallLabel>L</div>`
+	// cn += `</div><br>`
 	
 	d.getElementById('wall').innerHTML = cn;
 }
