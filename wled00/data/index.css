@@ -1286,3 +1286,10 @@ height:100vw;
 #namelabel{
 	color:gold;
 }
+
+.sliderwrap{
+	height: 38px;
+}
+.slider-icon {
+	transform: translate(10px,3px);
+}
