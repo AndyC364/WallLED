@@ -457,12 +457,10 @@ img {
 .sliderdisplay {
 	content:'';
 	position: absolute;
-	/* top: 12.5px; bottom: 12.5px; */
-	top: 0; bottom: 0;
+	top: 12.5px; bottom: 12.5px;
 	left: 13px; right: 13px;
 	background: var(--c-4);
-	/* border-radius: 17px; */
-	border-radius: 0;
+	border-radius: 17px;
 	pointer-events: none;
 	z-index: -1;
 	--bg: var(--c-f);
@@ -1287,9 +1285,19 @@ height:100vw;
 	color:gold;
 }
 
-.sliderwrap{
+/* TOP BAR */
+#buttonNl, #buttonSync, #buttonSr{
+	display: none; /* hide Timer, Sync, Peek */
+}
+#top .sliderwrap{
 	height: 38px;
 }
-.slider-icon {
+#top .slider-icon {
 	transform: translate(10px,3px);
+}
+
+#top .sliderdisplay{
+	top: 0; 
+	bottom: 0;
+	border-radius: 0;
 }
