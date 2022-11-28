@@ -1301,3 +1301,11 @@ height:100vw;
 	bottom: 0;
 	border-radius: 0;
 }
+
+
+
+.btn-random {
+	font-size: 32px;
+	width: 2em;
+	background-color: rebeccapurple;
+}
