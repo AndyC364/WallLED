@@ -1286,7 +1286,7 @@ height:100vw;
 }
 
 /* TOP BAR */
-#buttonNl, #buttonSync, #buttonSr{
+#buttonNl, #buttonSync, #buttonSr, #buttonNodes{
 	display: none; /* hide Timer, Sync, Peek */
 }
 #top .sliderwrap{
