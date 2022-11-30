@@ -1295,11 +1295,13 @@ height:100vw;
 #top .slider-icon {
 	transform: translate(10px,3px);
 }
-
 #top .sliderdisplay{
 	top: 0; 
 	bottom: 0;
 	border-radius: 0;
+}
+#buttonPower.active > .icons{
+	color: #0dbc79;
 }
 
 
