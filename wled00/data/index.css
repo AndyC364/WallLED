@@ -1303,9 +1303,28 @@ height:100vw;
 }
 
 
-
+.emojiInput{
+	float: left;
+	/* padding: 0px 10%; */
+	width:50%;
+}
 .btn-random {
-	font-size: 32px;
-	width: 2em;
-	background-color: rebeccapurple;
+	float:right;
+	font-size: 3rem;
+	width: 100%;
+    height: 80px;
+	background-color: transparent;
+	margin: 0;
+	padding: 0 0 10px 0!important;
+}
+.randomDiv{
+	float:left;
+	width: 50%;
+}
+input[type=text].qltxt{
+	padding: 10px 5px 15px 5px;
+	height: 3rem;
+	width: 60%;
+	margin: 0 10%;
+	font-size: 3rem;
 }

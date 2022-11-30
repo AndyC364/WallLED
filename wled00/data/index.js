@@ -2684,10 +2684,11 @@ function makeProb(i,pl) {
 		liveJSON = clearJSON;
 	}
 	return `<input type="text" class="ptxt noslide" id="p${i}txt" autocomplete="off" maxlength=32 value="${(i>0)?pName(i):""}" placeholder="Enter name..."/><br>
-<div class="c">Emoji: <input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off" placeholder=":)"/></div>
+<div class="c emojiInput"><input type="text" class="qltxt noslide" maxlength=2 value="${qlName(i)}" id="p${i}ql" autocomplete="off" placeholder=":)"/>
+</div>
+<div class="randomDiv">
 <button class="btn btn-random" onclick="getRandomEmoji(${i})">🔀</button>
-<div class="h">(optional)</div>
-
+</div>
 	<label class="check revchkl hidden">
 		${(i>0)?"Overwrite with state":"Use current state"}
 		<input type="checkbox" id="p${i}cstgl" onchange="tglCs(${(i>0)?i:getLowestUnusedP()})"}>
