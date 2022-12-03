@@ -1223,14 +1223,16 @@ input[type="text"].search:not(:placeholder-shown) {
 	font-size:16px;
 }
 
+
 .wallContainer{
-width:calc(100vw - 6px);
+	width:calc(100vw - 36px);
 /* height:100vw; */
+	margin: 0 0 0 30px;
 }
 .wallBack{
-height:100vw;
+	height:100vw;
 }
-.wallBtn{
+.wallBtn, .wallLetters p, .wallNumbers p{
 	padding: 0;
     margin: 0.1666%;
     width: 8%;
@@ -1243,6 +1245,22 @@ height:100vw;
 }
 .wallBtn::first-letter{
 	color:#0dbc79;
+}
+.wallLetters{
+	height:30px;
+	background: blue;
+	color:#0dbc79;
+}
+.wallNumbers{
+	width:30px;
+	position: absolute;
+	background-color: #0f0;
+}
+.wallNumbers p, .wallLetters p{
+	font-size: 1em;
+}
+.wallNumbers p{
+	float:left;
 }
 .wallLabel{
 	padding: 0;
@@ -1275,6 +1293,10 @@ height:100vw;
 	fill:white;
 	/* height: 24px; */
 	/* width: 24px; */
+}
+.wallIcon{
+	filter: invert(100%); /* white icon*/
+	height: 24px;
 }
 
 .icons{

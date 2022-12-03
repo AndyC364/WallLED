@@ -2347,6 +2347,23 @@ _C.addEventListener('touchend', move, false);
 function buttonGrid() 
 {
 	var cn = `<div class="wallContainer">
+	<div class="wallLetters">
+		<p>A</p><p>B</p><p>C</p><p>D</p><p>E</p><p>F</p><p>G</p><p>H</p><p>I</p><p>J</p><p>K</p><p>L</p>
+	</div>
+	<div class="wallNumbers">
+		<p>12</p><br>
+		<p>11</p><br>
+		<p>10</p><br>
+		<p>9</p><br>
+		<p>8</p><br>
+		<p>7</p><br>
+		<p>6</p><br>
+		<p>5</p><br>
+		<p>4</p><br>
+		<p>3</p><br>
+		<p>2</p><br>
+		<p>1</p><br>
+	</div>
 	<div class="wallBack">`
 	for(j=1;j<10;j++) // top row
 	{	
