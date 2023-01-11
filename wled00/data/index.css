@@ -1225,18 +1225,18 @@ input[type="text"].search:not(:placeholder-shown) {
 
 
 .wallContainer{
-	width:calc(100vw - 36px);
+	width:calc(100vw - 6px);
 /* height:100vw; */
-	margin: 0 0 0 30px;
+	margin: 0 0 0 7.5%;
 }
 .wallBack{
 	height:100vw;
 }
 .wallBtn, .wallLetters p, .wallNumbers p{
 	padding: 0;
-    margin: 0.1666%;
-    width: 8%;
-    height: 8%;
+    margin: 0.19%;
+    width: 7.5%;
+    height: 7.5%;
     font-size: .75rem;
 	font-weight: bold;
     border-radius: 99px;
@@ -1247,16 +1247,16 @@ input[type="text"].search:not(:placeholder-shown) {
 	color:#0dbc79;
 }
 .wallLetters{
-	height:30px;
+	height:24px;
 	background: blue;
 	color:#0dbc79;
 }
 .wallNumbers{
-	width:30px;
+	width:7.5vw;
 	position: absolute;
 	background-color: #0f0;
 }
-.wallNumbers p, .wallLetters p{
+.wallNumbers div, .wallLetters p{
 	font-size: 1em;
 }
 .wallNumbers p{
