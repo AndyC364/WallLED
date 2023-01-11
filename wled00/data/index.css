@@ -1227,15 +1227,15 @@ input[type="text"].search:not(:placeholder-shown) {
 .wallContainer{
 	width:calc(100vw - 6px);
 /* height:100vw; */
-	margin: 0 0 0 7.5%;
+	/* margin: 0 0 0 7.5%; */
 }
 .wallBack{
 	height:100vw;
 }
-.wallBtn, .wallLetters p, .wallNumbers p{
+.wallBtn, .wallLetters p, .wallNumber p{
 	padding: 0;
     margin: 0.19%;
-    width: 7.5%;
+    width: 7..5%;
     height: 7.5%;
     font-size: .75rem;
 	font-weight: bold;
@@ -1251,15 +1251,16 @@ input[type="text"].search:not(:placeholder-shown) {
 	background: blue;
 	color:#0dbc79;
 }
-.wallNumbers{
-	width:7.5vw;
-	position: absolute;
-	background-color: #0f0;
+.wallNumber{
+	width:5vw;
+	position: relative;
+	float:left;
+	/* background-color: #0f0; */
 }
-.wallNumbers div, .wallLetters p{
+.wallNumber div, .wallLetters p{
 	font-size: 1em;
 }
-.wallNumbers p{
+.wallNumber p{
 	float:left;
 }
 .wallLabel{

@@ -2348,48 +2348,36 @@ function buttonGrid()
 {
 	var cn = `<div class="wallContainer">
 	<div class="wallLetters">
-		<p>A</p><p>B</p><p>C</p><p>D</p><p>E</p><p>F</p><p>G</p><p>H</p><p>I</p><p>J</p><p>K</p><p>L</p>
-	</div>
-	<div class="wallNumbers">
-		<div>12</div>
-		<div>11</div>
-		<div>10</div>
-		<div>9</div>
-		<div>8</div>
-		<div>7</div>
-		<div>6</div>
-		<div>5</div>
-		<div>4</div>
-		<div>3</div>
-		<div>2</div>
-		<div>1</div>
-	</div>
-	<div class="wallBack">`
+	<p>A</p><p>B</p><p>C</p><p>D</p><p>E</p><p>F</p><p>G</p><p>H</p><p>I</p><p>J</p><p>K</p><p>L</p></div>
+	<div class="wallBack">
+	<div class="wallNumber">12</div>`;
 	for(j=1;j<10;j++) // top row
 	{	
-		// cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">`;
-		// cn += LEDcodes[j-1]; // puts led code of current led number as button text
-		// cn += `</button>`;
-		
-		cn += `<image id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)" src="images/holds/`;
+		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">`;
 		cn += LEDcodes[j-1]; // puts led code of current led number as button text
-		cn += `.gif"></image>`;
+		cn += `</button>`;
+		
+		// Hold images test
+		// cn += `<image id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)" src="images/holds/`;
+		// cn += LEDcodes[j-1]; // puts led code of current led number as button text
+		// cn += `.gif"></image>`;
 
 	}
 	for(j=0;j<3;j++) // hide top right 3
 	{	
 		cn += `<button id="btn${j}" class="hideMe btn btn${j} wallBtn">${j}</button>`;
 	}
+	cn += `<div class="wallNumber">11</div>`;
 	for(j=10;j<142;j++) // all the rest
 	{
-		// cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">`;
-		// cn += LEDcodes[j-1];
-		// cn += `</button>`;
+		cn += `<button id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)">`;
+		cn += LEDcodes[j-1];
+		cn += `</button>`;
 
-		
-		cn += `<image id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)" src="images/holds/`;
-		cn += LEDcodes[j-1]; // puts led code of current led number as button text
-		cn += `.gif"></image>`;
+		// Hold images test
+		// cn += `<image id="btn${j}" class="btn btn${j} wallBtn" onclick="starSet(this)" src="images/holds/`;
+		// cn += LEDcodes[j-1]; // puts led code of current led number as button text
+		// cn += `.gif"></image>`;
 	}
 	// cn += `<div class=wallLabel>A</div>
 	// <div class=wallLabel>B</div>
@@ -2403,15 +2391,10 @@ function buttonGrid()
 	// <div class=wallLabel>J</div>
 	// <div class=wallLabel>K</div>
 	// <div class=wallLabel>L</div>`
-	// cn += `</div><br>`
+	// cn += `</div></div><br>`;
 	
 	d.getElementById('wall').innerHTML = cn;
 }
-
-
-
-
-
 
 function saveProb(i) {
 	pI = parseInt(d.getElementById(`p${i}id`).value);
