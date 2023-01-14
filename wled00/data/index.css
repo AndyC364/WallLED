@@ -1235,7 +1235,7 @@ input[type="text"].search:not(:placeholder-shown) {
 .wallBtn, .wallLetters p, .wallNumber p{
 	padding: 0;
     margin: 0.19%;
-    width: 7..5%;
+    width: 7.5%;
     height: 7.5%;
     font-size: .75rem;
 	font-weight: bold;
@@ -1247,21 +1247,25 @@ input[type="text"].search:not(:placeholder-shown) {
 	color:#0dbc79;
 }
 .wallLetters{
-	height:24px;
-	background: blue;
-	color:#0dbc79;
 }
-.wallNumber{
+button.wallLetter{
+	/* width:5vw; */
+	position: relative;
+	float:left;
+	/* color:#ccc; */
+	background-color: transparent;
+	cursor: default;
+}
+button.wallNumber{
 	width:5vw;
 	position: relative;
 	float:left;
-	/* background-color: #0f0; */
+	color:#ccc;
+	background-color: transparent;
+	cursor: default;
 }
-.wallNumber div, .wallLetters p{
-	font-size: 1em;
-}
-.wallNumber p{
-	float:left;
+.wallNumber::first-letter{
+	color:#ccc;
 }
 .wallLabel{
 	padding: 0;
